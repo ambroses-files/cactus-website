@@ -6,7 +6,7 @@
     open this project in an integrated terminal,
     > python3 -m http.server 8000
     use the url:
-    http://localhost:8000/public.html/
+    http://localhost:8000/public.html/index.html
 
     or, alternatively, use the url: 
     file:///home/ambrose/Documents/GitHub/cactus-website/public.html/index.html
@@ -16,14 +16,14 @@
 -->
 
 <head>
-    <title>ancienttech</title>
+    <title>ATC</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Shop san pedro cactus here" />
     <meta name="keywords" content="Trichocereus, Pachanoi, Bridgesii, Peruvianus, San Pedro, Cactus, Variegated, Crested, Seedlings" />
-    <link href="../static/css/normalize.css"
+    <link href="/static/css/normalize.css"
           type="text/css" rel="stylesheet" />
-    <link href="../static/css/main.css"
+    <link href="/static/css/main.css"
           type="text/css" rel="stylesheet" />
 </head>
 
@@ -87,7 +87,7 @@
        and returns an XML document */
     async function fetchListings() {
         try {
-            const response = await fetch('static/xml/listings.xml');
+            const response = await fetch('/static/xml/listings.xml?v=1');
             if (!response.ok) {
                 throw new Error(`XML fetch error: ${response.status}`);
             }
@@ -112,9 +112,9 @@
             const myDescription = element.getElementsByTagName("description")[0]?.textContent || "No description available.";
             const myPrice = element.getElementsByTagName("price")[0]?.textContent || 0;
             const mySold = element.getElementsByTagName("isSold")[0]?.textContent === "true" || false;
-            const myUrl = element.getElementsByTagName("imageUrl")[0]?.textContent || "static/images/missing_image.png";
+            const myUrl = element.getElementsByTagName("imageUrl")[0]?.textContent || "/static/images/missing_image.png";
 
-            const newListing = Listing(myNumber, myCategory, myDescription, myPrice, mySold, myUrl);
+            const newListing = new Listing(myNumber, myCategory, myDescription, myPrice, mySold, myUrl);
             listings.push(newListing);
         }
 
@@ -130,13 +130,34 @@
                 console.error("No listings found in XML document");
                 return [];
             }
-            return populateListings(xmlDoc);
+            const listings = populateListings(xmlDoc);
+            return listings;
         }
         catch (error) {
             console.error("Error in getListingsArray: ", error);
         }
     }
 
+    /* expects an array of Listing instances
+       and generates html */
+    async function generateListingHtml(listings) {
+        for (const listing of listings) {
+            const testP = document.createElement("p");
+            testP.textContent = `[${listing.itemNumber}] ${listing.description} - $${listing.price}`;
+            const testImg = document.createElement("img");
+            testImg.src = `${listing.imageUrl}`;
+            const section = document.getElementById(`${listing.category}`);
+            section.appendChild(testP);
+            section.appendChild(testImg);
+        }
+    }
+
+    async function main() {
+        const listings = await getListingsArray();
+        generateListingHtml(listings);
+    }
+
+    main();
 </script>
 
 </html>
