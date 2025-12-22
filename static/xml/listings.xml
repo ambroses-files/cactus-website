@@ -27,10 +27,14 @@
     <listing>
         <itemNumber>20000</itemNumber>
         <category>seedlings</category>
-        <description>a normal cactus</description>
+        <description>The five boxing wizards jump quickly. Jackdaws love my big sphinx of quartz.</description>
         <price>11.4</price>
         <isSold>false</isSold>
         <imageUrl>/static/images/test_cactus.png</imageUrl>
+    </listing>
+
+    <listing>
+        <category>seedlings</category>
     </listing>
 
     <listing>
@@ -42,4 +46,21 @@
         <imageUrl>/static/images/test_cactus.png</imageUrl>
     </listing>
 
+    <listing>
+        <itemNumber>40000</itemNumber>
+        <category>seedlings</category>
+        <description>a normal cactus</description>
+        <price>0</price>
+        <isSold>false</isSold>
+        <imageUrl>/static/images/test_cactus.png</imageUrl>
+    </listing>
+
+    <listing>
+        <itemNumber>50000</itemNumber>
+        <category>seedlings</category>
+        <description>The five boxing wizards jump quickly. Jackdaws love my big sphinx of quartz.</description>
+        <price>0.000</price>
+        <isSold>false</isSold>
+        <imageUrl>/static/images/test_cactus.png</imageUrl>
+    </listing>
 </listings>

@@ -47,21 +47,19 @@
             <h1> Seedlings </h1>
             <div class="grid">
                 <div class="listing">
-                    <p class="listing_number">10000</p>
-                    <img src="/static/images/test_cactus.png" class="listing_thumb" />
-                    <p class="listing_description">The five boxing wizards jump quickly. Jackdaws love my big sphinx of quartz.</p>
-                    <p class="listing_price">$5.00</p>
-                </div>
             </div>
         </section>
         <section id="clones">
             <h1> Clones </h1>
+            <div class="grid"></div>
         </section>
         <section id="mutated">
             <h1> Crested-Mutated </h1>
+            <div class="grid"></div>
         </section>
         <section id="about">
             <h1> About Us </h1>
+            <p>[hank slideshow]</p>
         </section>
     </main>
 
@@ -69,6 +67,7 @@
         <hr />
         <p>
             work in progress.
+            <!-- Credit to my son Ambrose who made this kickass website. -->
         </p>
     </footer>
 </body>
@@ -147,16 +146,48 @@
     }
 
     /* expects an array of Listing instances
-       and generates html */
+       and populates DOM sections with listings in the form:
+            <div class="listing">
+                <p class="listing_number">`${listing.itemNumber}`</p>
+                <img src=`${listing.imageUrl}` class="listing_thumb" />
+                <p class="listing_description">`${listing.description}`</p>
+                <p class="listing_price">$`${listing.price}`</p>
+            </div> */
     async function generateListingHtml(listings) {
         for (const listing of listings) {
-            /*const testP = document.createElement("p");
-            testP.textContent = `[${listing.itemNumber}] ${listing.description} - $${listing.price}`;
-            const testImg = document.createElement("img");
-            testImg.src = `${listing.imageUrl}`;
+            // create elements
             const section = document.getElementById(`${listing.category}`);
-            section.appendChild(testP);
-            section.appendChild(testImg);*/
+            if (section) {
+                const grid = section.getElementsByClassName("grid")[0];
+                if (grid) {
+                    const listingDiv = document.createElement("div");
+                    listingDiv.setAttribute('class', 'listing');
+                    const listingNumber = document.createElement("p", {class: "listing_number"});
+                    listingNumber.setAttribute('class', 'listing_number');
+                    listingNumber.textContent = `${listing.itemNumber}`;
+                    const listingThumb = document.createElement("img");
+                    listingThumb.setAttribute('src', `${listing.imageUrl}`);
+                    listingThumb.setAttribute('class', 'listing_thumb');
+                    const listingDescription = document.createElement("p");
+                    listingDescription.setAttribute('class', 'listing_description');
+                    listingDescription.textContent = `${listing.description}`;
+                    const listingPrice = document.createElement("p");
+                    listingPrice.setAttribute('class', 'listing_price');
+                    const formatted_price = new Intl.NumberFormat("US", {style: "currency", currency: "USD", currencyDisplay: "narrowSymbol"}).format(`${listing.price}`);
+                    listingPrice.textContent = formatted_price;
+                    // place elements
+                    grid.appendChild(listingDiv);
+                    listingDiv.appendChild(listingNumber);
+                    listingDiv.appendChild(listingThumb);
+                    listingDiv.appendChild(listingDescription);
+                    listingDiv.appendChild(listingPrice);
+                } else {
+                    console.error("Error in generateListingHtml: Grid could not be found for listing: ", `${listing.itemNumber}`, " - ", `${listing.category}`);
+                } 
+            } else {
+                console.error("Error in generateListingHtml: Section could not be found for Listing: ", `${listing.itemNumber}`, " - ", `${listing.category}`);
+            }
+
         }
     }
 
