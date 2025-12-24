@@ -16,7 +16,7 @@
 -->
 
 <head>
-    <title>ATC</title>
+    <title>Ancient Tech</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Shop san pedro cactus here" />
@@ -34,6 +34,7 @@
             <a href="#seedlings">Seedlings</a> /
             <a href="#clones">Clones</a> /
             <a href="#mutated">Crested-Mutated</a> /
+            <a href="#order_info">Order Info</a> /
             <a href="#about">About Us</a>
         </nav>
         <p>
@@ -44,18 +45,20 @@
 
     <main>
         <section id="seedlings">
-            <h1> Seedlings </h1>
+            <h1> Seedlings - You receive exact cactus shown. </h1>
             <div class="grid">
-                <div class="listing">
             </div>
         </section>
         <section id="clones">
-            <h1> Clones </h1>
+            <h1> Clones - You receive exact cactus shown. </h1>
             <div class="grid"></div>
         </section>
         <section id="mutated">
-            <h1> Crested-Mutated </h1>
+            <h1> Crested and Mutated - You receive exact cactus shown. </h1>
             <div class="grid"></div>
+        </section>
+        <section id="order_info">
+            <h1> Order Information </h1>
         </section>
         <section id="about">
             <h1> About Us </h1>
@@ -116,7 +119,7 @@
         for (const element of listingElements) {
             const myNumber = element.getElementsByTagName("itemNumber")[0]?.textContent || "MISSING";
             const myCategory = element.getElementsByTagName("category")[0]?.textContent || "uncategorized";
-            const myDescription = element.getElementsByTagName("description")[0]?.textContent || "No description available.";
+            const myDescription = element.getElementsByTagName("description")[0]?.textContent || "Description coming soon.";
             const myPrice = element.getElementsByTagName("price")[0]?.textContent || 0;
             const mySold = element.getElementsByTagName("isSold")[0]?.textContent === "true" || false;
             const myUrl = element.getElementsByTagName("imageUrl")[0]?.textContent || "/static/images/missing_image.png";
@@ -218,6 +221,8 @@
     window.addEventListener('resize', () => {
         const paragraphs = document.querySelectorAll("p");
         paragraphs.forEach(paragraph => shrinkWrap(paragraph));
+        const navs = document.querySelectorAll("nav");
+        navs.forEach(nav => shrinkWrap(nav));
     });
 </script>
 
