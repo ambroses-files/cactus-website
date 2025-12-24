@@ -60,7 +60,7 @@
         <category>seedlings</category>
         <description>The five boxing wizards jump quickly. Jackdaws love my big sphinx of quartz.</description>
         <price>0.000</price>
-        <isSold>false</isSold>
+        <isSold>true</isSold>
         <imageUrl>/static/images/test_cactus.png</imageUrl>
     </listing>
 

@@ -180,8 +180,13 @@
                     listingDescription.textContent = `${listing.description}`;
                     const listingPrice = document.createElement("p");
                     listingPrice.setAttribute('class', 'listing_price');
-                    const formatted_price = new Intl.NumberFormat("US", {style: "currency", currency: "USD", currencyDisplay: "narrowSymbol"}).format(`${listing.price}`);
-                    listingPrice.textContent = formatted_price;
+                    if (listing.isSold === false) {
+                        const formatted_price = new Intl.NumberFormat("US", {style: "currency", currency: "USD", currencyDisplay: "narrowSymbol"}).format(`${listing.price}`);
+                        listingPrice.textContent = formatted_price;
+                    } else {
+                        listingPrice.textContent = "SOLD";
+                        listingPrice.style.color = "red";
+                    }
                     // place elements
                     grid.appendChild(listingDiv);
                     listingDiv.appendChild(listingNumber);
