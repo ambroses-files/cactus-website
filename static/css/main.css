@@ -3,6 +3,9 @@
   --black: 000000;
   --grey: E0E0E0E0;
   --link: 0000FF;
+
+  /* spacing */
+  --header-height: ;
 }
 
 * {
@@ -26,7 +29,17 @@ header {
   flex-wrap: wrap;
 }
 
-header > * {
+aside {
+  z-index: 9;
+  position: sticky;
+  top: calc(var(--header-height) + 10px);
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  flex-wrap: wrap;
+}
+
+header > *, aside > * {
     padding: 5px;
     margin: 5px;
     margin-left: 0;

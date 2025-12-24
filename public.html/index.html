@@ -37,24 +37,28 @@
             <a href="#order_info">Order Info</a> /
             <a href="#about">About Us</a>
         </nav>
-        <p>
+        <p id="contact">
             For orders and inquiries contact us at 
             <a href="mailto:ancienttechcultivation@gmail.com">ancienttechcultivation@gmail.com</a>
         </p>
     </header>
 
+    <aside>
+        <p> You receive exact cactus shown. </p>
+    </aside>
+
     <main>
         <section id="seedlings">
-            <h1> Seedlings - You receive exact cactus shown. </h1>
+            <h1> Seedlings </h1>
             <div class="grid">
             </div>
         </section>
         <section id="clones">
-            <h1> Clones - You receive exact cactus shown. </h1>
+            <h1> Clones </h1>
             <div class="grid"></div>
         </section>
         <section id="mutated">
-            <h1> Crested and Mutated - You receive exact cactus shown. </h1>
+            <h1> Crested and Mutated </h1>
             <div class="grid"></div>
         </section>
         <section id="order_info">
@@ -97,7 +101,7 @@
        and returns an XML document */
     async function fetchListings() {
         try {
-            const response = await fetch('/static/xml/listings.xml?v=1');
+            const response = await fetch('/static/xml/listings.xml?v=6');
             if (!response.ok) {
                 throw new Error(`XML fetch error: ${response.status}`);
             }
@@ -198,10 +202,38 @@
         const listings = await getListingsArray();
         generateListingHtml(listings);
         shrinkWrap(document.querySelector("p"));
+        storeHeaderHeight();
+        asideWrap();
     }
 
-    /* Credit to Jake Meyers and V. Rubinetti 4.10.24
-        https://stackoverflow.com/questions/14596213/ */
+    /* updates the CSS variable --header-height
+       to contain the current the height of the header, 
+       including vertical padding and borders */
+    function storeHeaderHeight() {
+        const header = document.querySelector("header");
+        const height = header.offsetHeight;
+        const root = document.documentElement;
+        root.style.setProperty('--header-height', `${height}px`);
+    }
+
+    /* compares the heights of the header elements
+       if flex-wrap occurs, align the aside left,
+       otherwise align the aside right */
+    function asideWrap() {
+        const nav = document.querySelector("nav").getBoundingClientRect();
+        const contact = document.getElementById("contact").getBoundingClientRect();;
+        const aside = document.querySelector("aside");
+        if (contact.top > nav.top) {
+            aside.style.justifyContent = "left";
+        } else {
+            aside.style.justifyContent = "right";
+        }
+    }
+
+    /* expects an element
+       and reduces width of the element to the element's content width.
+       Credit to Jake Meyers and V. Rubinetti 4.10.24
+       https://stackoverflow.com/questions/14596213/ */
     function shrinkWrap(element) {
         const {firstChild, lastChild} = element;
         if (!element || !firstChild || !lastChild) return;
@@ -219,10 +251,15 @@
     main();
 
     window.addEventListener('resize', () => {
+        // shrinkwrap all paragraphs
         const paragraphs = document.querySelectorAll("p");
         paragraphs.forEach(paragraph => shrinkWrap(paragraph));
         const navs = document.querySelectorAll("nav");
         navs.forEach(nav => shrinkWrap(nav));
+
+        // attach aside to header
+        storeHeaderHeight();
+        asideWrap();
     });
 </script>
 
