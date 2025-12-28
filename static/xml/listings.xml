@@ -65,6 +65,15 @@
     </listing>
 
     <listing>
+        <itemNumber>60000</itemNumber>
+        <category>other</category>
+        <description>2" X 1 Bullyland Calf Mona Brown White Animal Figure 62630. </description>
+        <price>10000</price>
+        <isSold>true</isSold>
+        <imageUrl>/static/images/test_cactus.png</imageUrl>
+    </listing>
+
+    <listing>
         <itemNumber>1021</itemNumber>
         <category>seedlings</category>
         <description>Huancambaba X Landfill. 1.5-2 inches tall. Started indoors under LED lighting. Organic inputs.</description>
