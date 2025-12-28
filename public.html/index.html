@@ -31,21 +31,20 @@
 
     <header>
         <nav>
-            <a href="#seedlings">Seedlings</a> /
-            <a href="#clones">Clones</a> /
-            <a href="#mutated">Crested-Mutated</a> /
-            <a href="#order_info">Order Info</a> /
-            <a href="#about">About Us</a>
+            <ul>
+            <li> <a href="#seedlings">Seedlings</a> / </li>
+            <li> <a href="#clones">Clones</a> / </li>
+            <li> <a href="#mutated">Crested-Mutated</a> / </li>
+            <li> <a href="#other">Other Product</a>  / </li>
+            <li> <a href="#order_info">Order Info</a> / </li>
+            <li> <a href="#about">About Us</a> / </li>
+            <li> <a href="#footer">Contact</a> / </li>
+            <li> <a href="#sold">Sold</a> </li>
+            </ul>
         </nav>
-        <p id="contact">
-            For orders and inquiries contact us at 
-            <a href="mailto:ancienttechcultivation@gmail.com">ancienttechcultivation@gmail.com</a>
-        </p>
-    </header>
 
-    <aside>
         <p> You receive exact cactus shown. </p>
-    </aside>
+    </header>
 
     <main>
         <section id="seedlings">
@@ -53,24 +52,38 @@
             <div class="grid">
             </div>
         </section>
+
         <section id="clones">
             <h1> Clones </h1>
             <div class="grid"></div>
         </section>
+
         <section id="mutated">
             <h1> Crested and Mutated </h1>
             <div class="grid"></div>
         </section>
+
+        <section id="other">
+            <h1> Other Product </h1>
+            <div class="grid"></div>
+        </section>
+
+        <section id="sold">
+            <h1> Sold </h1>
+            <div class="grid"></div>
+        </section>
+
         <section id="order_info">
             <h1> Order Information </h1>
         </section>
+
         <section id="about">
             <h1> About Us </h1>
             <p>[hank slideshow]</p>
         </section>
     </main>
 
-    <footer>
+    <footer id="footer">
         <hr />
         <p>
             work in progress.
@@ -95,7 +108,8 @@
     /* For a listing to have responsive images, 
        it requires imageUrl attributes for each resolution expected. 
        change should be made in future iteration 
-       https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Responsive_images */
+       https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Responsive_images 
+       https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design*/
 
     /* expects listings.xml to be stored locally 
        and returns an XML document */
@@ -162,53 +176,54 @@
             </div> */
     async function generateListingHtml(listings) {
         for (const listing of listings) {
-            // create elements
-            const section = document.getElementById(`${listing.category}`);
+            // create and place elements
+            const section = (listing.isSold === true) ? document.getElementById("sold") : document.getElementById(`${listing.category}`);
             if (section) {
                 const grid = section.getElementsByClassName("grid")[0];
                 if (grid) {
                     const listingDiv = document.createElement("div");
                     listingDiv.setAttribute('class', 'listing');
-                    const listingNumber = document.createElement("p", {class: "listing_number"});
+                    grid.appendChild(listingDiv);
+
+                    const listingNumber = document.createElement("p");
                     listingNumber.setAttribute('class', 'listing_number');
                     listingNumber.textContent = `${listing.itemNumber}`;
+                    listingDiv.appendChild(listingNumber);
+
                     const listingThumb = document.createElement("img");
                     listingThumb.setAttribute('src', `${listing.imageUrl}`);
                     listingThumb.setAttribute('class', 'listing_thumb');
+                    listingDiv.appendChild(listingThumb);
+
                     const listingDescription = document.createElement("p");
                     listingDescription.setAttribute('class', 'listing_description');
                     listingDescription.textContent = `${listing.description}`;
+                    listingDiv.appendChild(listingDescription);
+
+                    const listingPriceContainer = document.createElement("div");
+                    listingPriceContainer.setAttribute('class', 'listing_price_container');
+                    listingDiv.appendChild(listingPriceContainer);
+
+                    if (listing.isSold === true) {
+                        const listingPriceCover = document.createElement("p");
+                        listingPriceCover.setAttribute('class', 'listing_price_cover');
+                        listingPriceCover.textContent = "SOLD";
+                        listingPriceContainer.appendChild(listingPriceCover);
+                    }
+
                     const listingPrice = document.createElement("p");
                     listingPrice.setAttribute('class', 'listing_price');
-                    if (listing.isSold === false) {
-                        const formatted_price = new Intl.NumberFormat("US", {style: "currency", currency: "USD", currencyDisplay: "narrowSymbol"}).format(`${listing.price}`);
-                        listingPrice.textContent = formatted_price;
-                    } else {
-                        listingPrice.textContent = "SOLD";
-                        listingPrice.style.color = "red";
-                    }
-                    // place elements
-                    grid.appendChild(listingDiv);
-                    listingDiv.appendChild(listingNumber);
-                    listingDiv.appendChild(listingThumb);
-                    listingDiv.appendChild(listingDescription);
-                    listingDiv.appendChild(listingPrice);
+                    const formatted_price = new Intl.NumberFormat("US", {style: "currency", currency: "USD", currencyDisplay: "narrowSymbol"}).format(`${listing.price}`);
+                    listingPrice.textContent = formatted_price;
+                    listingPriceContainer.appendChild(listingPrice);
+
                 } else {
                     console.error("Error in generateListingHtml: Grid could not be found for listing: ", `${listing.itemNumber}`, " - ", `${listing.category}`);
                 } 
             } else {
                 console.error("Error in generateListingHtml: Section could not be found for Listing: ", `${listing.itemNumber}`, " - ", `${listing.category}`);
             }
-
         }
-    }
-
-    async function main() {
-        const listings = await getListingsArray();
-        generateListingHtml(listings);
-        shrinkWrap(document.querySelector("p"));
-        storeHeaderHeight();
-        asideWrap();
     }
 
     /* updates the CSS variable --header-height
@@ -221,50 +236,16 @@
         root.style.setProperty('--header-height', `${height}px`);
     }
 
-    /* compares the heights of the header elements
-       if flex-wrap occurs, align the aside left,
-       otherwise align the aside right */
-    function asideWrap() {
-        const nav = document.querySelector("nav").getBoundingClientRect();
-        const contact = document.getElementById("contact").getBoundingClientRect();;
-        const aside = document.querySelector("aside");
-        if (contact.top > nav.top) {
-            aside.style.justifyContent = "left";
-        } else {
-            aside.style.justifyContent = "right";
-        }
+    async function main() {
+        const listings = await getListingsArray();
+        generateListingHtml(listings);
+        storeHeaderHeight();
     }
-
-    /* expects an element
-       and reduces width of the element to the element's content width.
-       Credit to Jake Meyers and V. Rubinetti 4.10.24
-       https://stackoverflow.com/questions/14596213/ */
-    function shrinkWrap(element) {
-        const {firstChild, lastChild} = element;
-        if (!element || !firstChild || !lastChild) return;
-
-        element.style.width = 'auto';
-
-        const range = document.createRange();
-        range.setStartBefore(firstChild);
-        range.setEndAfter(lastChild);
-        const {width} = range.getBoundingClientRect();
-        element.style.width = width + "px";
-        element.style.boxSizing = "content-box";
-    };
 
     main();
 
     window.addEventListener('resize', () => {
-        // shrinkwrap all paragraphs
-        const paragraphs = document.querySelectorAll("p");
-        paragraphs.forEach(paragraph => shrinkWrap(paragraph));
-        const navs = document.querySelectorAll("nav");
-        navs.forEach(nav => shrinkWrap(nav));
-
-        // attach aside to header
         storeHeaderHeight();
-        asideWrap();
     });
 </script>
 

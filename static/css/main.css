@@ -1,19 +1,30 @@
 :root {
-  --white: ffffff;
-  --black: 000000;
-  --grey: E0E0E0E0;
-  --link: 0000FF;
+  --white: #ffffff;
+  --black: #000000;
+  --grey: #e0e0e0;
+  --link: #0000FF;
+  --red: #FF0000;
 
   /* spacing */
   --header-height: ;
 }
 
 * {
+  font: normal normal normal 15px serif;
+}
+
+@media screen and (width >= 820px) {
+  * {
   font: normal normal normal 16px serif;
+  }
 }
 
 body {
   padding: 20px;
+  padding-top: 0px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* header */
@@ -21,41 +32,48 @@ body {
 header {
   z-index: 10;
   position: sticky;
-  margin-top: -10px;
-  top: 10px;
+  top: 5px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 5px;
 }
 
-aside {
-  z-index: 9;
-  position: sticky;
-  top: calc(var(--header-height) + 10px);
-  display: flex;
-  flex-direction: row;
-  justify-content: right;
-  flex-wrap: wrap;
+header > * {
+  margin: 0;
+  padding: 5px;
+  background-color: var(--white);
+  border-bottom: 1px outset var(--black);
+  border-right: 1px outset var(--black);
 }
 
-header > *, aside > * {
-    padding: 5px;
-    margin: 5px;
-    margin-left: 0;
-    margin-right: 0;
-    background-color: white;
-    border-bottom-color: var(--black);
-    border-bottom-width: 1px;
-    border-bottom-style: outset;
-    border-right-color: var(--black);
-    border-right-width: 1px;
-    border-right-style: outset;
+header > p {
+  width: fit-content;
 }
 
-/* h1 */
-/* credit to Tsuneo Yoshioka and Erick Xenes
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  display: inline-block;
+  padding: 0;
+}
+
+nav a {
+  color: var(--link);
+}
+
+
+/* section */
+/* credit to Tsuneo Yoshioka and Erick Xenes for h1 line
    https://stackoverflow.com/questions/5214127/ */
+
+section {
+  scroll-margin-top: var(--header-height);
+}
 
 h1 {
   z-index: 0;
@@ -64,12 +82,14 @@ h1 {
   font-size: medium;
   padding-top: 15px;
 }
+
 h1:after{
   content: "";
   flex: 1 1;
   border-bottom: 1px solid;
   margin: auto;
 }
+
 h1:after {
   margin-left: 10px
 }
@@ -78,27 +98,36 @@ h1:after {
 
 .grid {
   display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-columns: 50% 50%;
 }
 
+@media screen and (width >= 650px) {
+  .grid {
+    grid-template-columns: 33% 33% 33%;
+  }
+}
+
+@media screen and (width >= 820px) {
+  .grid {
+    grid-template-columns: 25% 25% 25% 25%;
+  }
+}
+
+
 .listing {
+  position: relative;
   z-index: 5;
-  width: 25%px;
   padding: 5px;
 }
 
-.listing > p {
+.listing p {
   z-index: 7;
   width: fit-content;
   padding: 3px;
   margin: 5px;
-  background-color: white;
-  border-bottom-color: var(--black);
-  border-bottom-width: 1px;
-  border-bottom-style: outset;
-  border-right-color: var(--black);
-  border-right-width: 1px;
-  border-right-style: outset;
+  background-color: var(--white);
+  border-bottom: 1px outset var(--black);
+  border-right: 1px outset var(--black);
 }
 
 .listing_thumb {
@@ -109,4 +138,20 @@ h1:after {
 
 .listing_number {
   position: absolute;
+}
+
+.listing_price_container {
+  position: relative;
+}
+
+.listing_price_container .listing_price_cover {
+  z-index: 8;
+  position: absolute;
+  bottom: 26.5px;
+  background-color: var(--red);
+  color: var(--white);
+  padding-top: 0;
+  padding-bottom: 0;
+  text-align: center;
+  bottom: 0;
 }
