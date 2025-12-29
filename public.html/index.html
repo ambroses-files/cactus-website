@@ -96,13 +96,15 @@
 "use strict";
 
     class Listing {
-        constructor(myNumber, myCategory, myDescription, myPrice, mySold, myUrl) {
+        constructor(myNumber, myCategory, myDescription, myPrice, mySold, mySmallUrl, myMedUrl, myBigUrl) {
             this.itemNumber = myNumber;
             this.category = myCategory;
             this.description = myDescription;
             this.price = myPrice;
             this.isSold = mySold;
-            this.imageUrl = myUrl;
+            this.imageSmall = mySmallUrl;
+            this.imageMedium = myMedUrl;
+            this.imageBig = myBigUrl;
         }
     }
     /* For a listing to have responsive images, 
@@ -115,7 +117,7 @@
        and returns an XML document */
     async function fetchListings() {
         try {
-            const response = await fetch('/static/xml/listings.xml?v=6');
+            const response = await fetch('/static/xml/listings.xml?v=8');
             if (!response.ok) {
                 throw new Error(`XML fetch error: ${response.status}`);
             }
@@ -140,9 +142,11 @@
             const myDescription = element.getElementsByTagName("description")[0]?.textContent || "Description coming soon.";
             const myPrice = element.getElementsByTagName("price")[0]?.textContent || 0;
             const mySold = element.getElementsByTagName("isSold")[0]?.textContent === "true" || false;
-            const myUrl = element.getElementsByTagName("imageUrl")[0]?.textContent || "/static/images/missing_image.png";
+            const mySmallUrl = element.getElementsByTagName("imageSmall")[0]?.textContent || "/static/images/missing_image.png";
+            const myMedUrl = element.getElementsByTagName("imageMedium")[0]?.textContent || "/static/images/missing_image.png";
+            const myBigUrl = element.getElementsByTagName("imageBig")[0]?.textContent || "/static/images/missing_image.png";
 
-            const newListing = new Listing(myNumber, myCategory, myDescription, myPrice, mySold, myUrl);
+            const newListing = new Listing(myNumber, myCategory, myDescription, myPrice, mySold, mySmallUrl, myMedUrl, myBigUrl);
             listings.push(newListing);
         }
 
@@ -190,10 +194,13 @@
                     listingNumber.textContent = `${listing.itemNumber}`;
                     listingDiv.appendChild(listingNumber);
 
-                    const listingThumb = document.createElement("img");
-                    listingThumb.setAttribute('src', `${listing.imageUrl}`);
-                    listingThumb.setAttribute('class', 'listing_thumb');
-                    listingDiv.appendChild(listingThumb);
+                    console.log()
+                    const listingImage = document.createElement("img");
+                    listingImage.setAttribute('class', 'listing_image');
+                    listingImage.setAttribute('src', `${listing.imageMedium}`);
+                    listingImage.setAttribute('srcset', `${listing.imageSmall} 640w, ${listing.imageMedium} 1024w, ${listing.imageBig} 1920w`);
+                    listingImage.setAttribute('size', '(width < 650px) 50vw, (width < 820px) 33vw, 25vw')
+                    listingDiv.appendChild(listingImage);
 
                     const listingDescription = document.createElement("p");
                     listingDescription.setAttribute('class', 'listing_description');

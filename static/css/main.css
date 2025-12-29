@@ -30,6 +30,7 @@ body {
 @media screen and (width >= 650px) {
   body {
   padding: 15px;
+  padding-top: 0;
   }
 }
 
@@ -98,9 +99,6 @@ h1:after{
   margin: auto;
 }
 
-h1:after {
-  margin-left: 10px
-}
 
 /* listings */
 
@@ -138,7 +136,7 @@ h1:after {
   border-right: 1px outset var(--black);
 }
 
-.listing_thumb {
+.listing_image {
   z-index: 6;
   width: 100%;
   height: auto;
@@ -167,5 +165,5 @@ h1:after {
   margin: 0;
   text-align: center;
   top: 3px;
-  width: 100%;
+  width: calc(100% - 8px) ;
 }
