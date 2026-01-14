@@ -6,7 +6,7 @@
     open this project in an integrated terminal,
     > python3 -m http.server 8000
     use the url:
-    http://localhost:8000/public.html/index.html
+    http://localhost:8000/index.html
 
     or, alternatively, use the url: 
     file:///home/ambrose/Documents/GitHub/cactus-website/public.html/index.html
@@ -21,9 +21,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Shop san pedro cactus here" />
     <meta name="keywords" content="Trichocereus, Pachanoi, Bridgesii, Peruvianus, San Pedro, Cactus, Variegated, Crested, Seedlings" />
-    <link href="/static/css/normalize.css"
+    <link href="static/css/normalize.css"
           type="text/css" rel="stylesheet" />
-    <link href="/static/css/main.css?v=7"
+    <link href="static/css/main.css"
           type="text/css" rel="stylesheet" />
 </head>
 
@@ -86,7 +86,7 @@
         <section id="about">
             <h1> About Us </h1>
             <div id="about_contents">
-                <img src="/static/images/missing_image.png" />
+                <img src="static/images/missing_image.png" />
                 <p> We are a small cactus nursery located in coastal Humboldt County, California in zone 9b. We love growing cactus, food and other plants with organic inputs and have doing doing so for a few decades. We are happy to offer our wide collection of Trichocereus, other plants and seeds. Thank you for your support. </p>
             </div>
         </section>
@@ -133,7 +133,7 @@
        and returns an XML document */
     async function fetchListings() {
         try {
-            const response = await fetch('/static/xml/listings.xml?v=8');
+            const response = await fetch('static/xml/listings.xml');
             if (!response.ok) {
                 throw new Error(`XML fetch error: ${response.status}`);
             }
