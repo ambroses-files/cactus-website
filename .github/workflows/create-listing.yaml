@@ -29,7 +29,8 @@ jobs:
   test_job:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-        echo "${{ github.event.inputs.item_number }}" > test.txt
+      - name: Write item number to file
+        run: |
+          echo "${{ github.event.inputs.item_number }}" > test.txt
 
       
