@@ -5,7 +5,7 @@ on:
       item_number:
         required: true
         type: string
-        description: "Do not use these characters: <, >, &, \", ', \\ "
+        description: "item_number\nDo not use these characters: <, >, &, \", ', \\ "
       category:
         required: true
         type: choice
@@ -17,12 +17,12 @@ on:
       description:
         required: true
         type: string
-        description: "Do not use these characters: <, >, &, \", ', \\ "
+        description: "description\nDo not use these characters: <, >, &, \", ', \\ "
         default: 'Description coming soon.'
       price:
         required: true
         type: number
-        description: 'Numbers only'
+        description: "price\nNumbers only"
         default: 0
       is_sold:
         required: true
@@ -37,20 +37,26 @@ jobs:
     steps:
       - name: validate inputs
         run: |
-          if [[ ${{ "github.event.inputs.item_number }}" =~ [<>&"'\\] ]]; then
-            echo "Error: 'item_number' must not include special characters."
-            exit 1
-          fi
+          - name: Validate inputs
+  run: |
+    item_number="${{ github.event.inputs.item_number }}"
+    description="${{ github.event.inputs.description }}"
+    price="${{ github.event.inputs.price }}"
 
-          if [[ "${{ github.event.inputs.description }}" =~ [<>&"'\\] ]]; then
-            echo "Error: 'description' must not include special characters."
-            exit 1
-          fi
+    if [[ "$item_number" =~ [<>&"'\\] ]]; then
+      echo "Error: 'item_number' must not include special characters."
+      exit 1
+    fi
 
-          if ! [[ "${{ github.event.inputs.price }}" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
-            echo "Error: 'price' must be a valid number."
-            exit 1
-          fi
+    if [[ "$description" =~ [<>&"'\\] ]]; then
+      echo "Error: 'description' must not include special characters."
+      exit 1
+    fi
+
+    if ! [[ "$price" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+      echo "Error: 'price' must be a valid number."
+      exit 1
+    fi
 
       - name: Checkout repository
         uses: actions/checkout@v6
