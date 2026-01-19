@@ -7,7 +7,7 @@ on:
         type: string
         description: |
           item_number
-          Do not use these characters: <, >, &, \", ', \\ "
+          (Do not use these characters: <, >, &, \", ', \\)
       category:
         required: true
         type: choice
@@ -21,14 +21,14 @@ on:
         type: string
         description: |
           description
-          Do not use these characters: <, >, &, \", ', \\ 
+          (Do not use these characters: <, >, &, \", ', \\)
         default: 'Description coming soon.'
       price:
         required: true
         type: number
         description: |
           price
-          Numbers only"
+          (Numbers only)
         default: 0
       is_sold:
         required: true
@@ -45,9 +45,9 @@ jobs:
         run: |
           - name: Validate inputs
   run: |
-    item_number=${{ github.event.inputs.item_number }}
-    description=${{ github.event.inputs.description }}
-    price=${{ github.event.inputs.price }}
+    item_number=${{ inputs.item_number }}
+    description=${{ inputs.description }}
+    price=${{ inputs.price }}
 
     if [[ "$item_number" =~ [<>&"'\\] ]]; then
       echo "Error: 'item_number' must not include special characters."
