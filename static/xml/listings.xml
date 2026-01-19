@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- listing element's valid values:
 * category
     seedlings
@@ -12,40 +11,42 @@
 * imageUrl
     static/images/...
  -->
-
 <listings>
-
-    <listing>
-        <itemNumber>1021</itemNumber>
-        <category>seedlings</category>
-        <description>Huancambaba X Landfill. 1.5-2 inches tall. Started indoors under LED lighting. Organic inputs.</description>
-        <price>2</price>
-        <isSold>false</isSold>
-        <imageSmall>static/images/xtratest640.jpg</imageSmall>
-        <imageMedium>static/images/xtratest1024.jpg</imageMedium>
-        <imageBig>static/images/xtratest1920.jpg</imageBig>
-    </listing>
-
-    <listing>
-        <itemNumber>1033</itemNumber>
-        <category>clones</category>
-        <description>Huancambaba X Landfill. 1.5-2 inches tall. Started indoors under LED lighting. Organic inputs.</description>
-        <price>2</price>
-        <isSold>true</isSold>
-        <imageSmall>static/images/xtratest640.jpg</imageSmall>
-        <imageMedium>static/images/xtratest1024.jpg</imageMedium>
-        <imageBig>static/images/xtratest1920.jpg</imageBig>
-    </listing>
-
-    <listing>
-        <itemNumber>1034</itemNumber>
-        <category>clones</category>
-        <description>Huancambaba X Landfill. 1.5-2 inches tall. Started indoors under LED lighting. Organic inputs.</description>
-        <price>2</price>
-        <isSold>false</isSold>
-        <imageSmall>static/images/xtratest640.jpg</imageSmall>
-        <imageMedium>static/images/xtratest1024.jpg</imageMedium>
-        <imageBig>static/images/xtratest1920.jpg</imageBig>
-    </listing>
-    
+  <listing>
+    <itemNumber>1021</itemNumber>
+    <category>seedlings</category>
+    <description>Huancambaba X Landfill. 1.5-2 inches tall. Started indoors under LED lighting. Organic inputs.</description>
+    <price>2</price>
+    <isSold>false</isSold>
+    <imageSmall>static/images/xtratest640.jpg</imageSmall>
+    <imageMedium>static/images/xtratest1024.jpg</imageMedium>
+    <imageBig>static/images/xtratest1920.jpg</imageBig>
+  </listing>
+  <listing>
+    <itemNumber>1033</itemNumber>
+    <category>clones</category>
+    <description>Huancambaba X Landfill. 1.5-2 inches tall. Started indoors under LED lighting. Organic inputs.</description>
+    <price>2</price>
+    <isSold>true</isSold>
+    <imageSmall>static/images/xtratest640.jpg</imageSmall>
+    <imageMedium>static/images/xtratest1024.jpg</imageMedium>
+    <imageBig>static/images/xtratest1920.jpg</imageBig>
+  </listing>
+  <listing>
+    <itemNumber>1034</itemNumber>
+    <category>clones</category>
+    <description>Huancambaba X Landfill. 1.5-2 inches tall. Started indoors under LED lighting. Organic inputs.</description>
+    <price>2</price>
+    <isSold>false</isSold>
+    <imageSmall>static/images/xtratest640.jpg</imageSmall>
+    <imageMedium>static/images/xtratest1024.jpg</imageMedium>
+    <imageBig>static/images/xtratest1920.jpg</imageBig>
+  </listing>
+  <listing>
+    <itemNumber>0000</itemNumber>
+    <category>seedlings</category>
+    <description>Test.</description>
+    <price>4.5</price>
+    <isSold>false</isSold>
+  </listing>
 </listings>
