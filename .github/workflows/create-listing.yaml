@@ -37,17 +37,17 @@ jobs:
     steps:
       - name: validate inputs
         run: |
-          if [[ ${{ github.event.inputs.item_number }} =~ [<>&"'\\] ]] then
+          if [[ ${{ "github.event.inputs.item_number }}" =~ [<>&"'\\] ]]; then
             echo "Error: 'item_number' must not include special characters."
             exit 1
           fi
 
-          if [[ ${{ github.event.inputs.description }} =~ [<>&"'\\] ]] then
+          if [[ "${{ github.event.inputs.description }}" =~ [<>&"'\\] ]]; then
             echo "Error: 'description' must not include special characters."
             exit 1
           fi
 
-          if ! [[ ${{ github.event.inputs.price }} =~ ^\d+$ ]]
+          if ! [[ "${{ github.event.inputs.price }}" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
             echo "Error: 'price' must be a valid number."
             exit 1
           fi
