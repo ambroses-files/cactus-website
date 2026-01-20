@@ -56,4 +56,11 @@
     <price>a</price>
     <isSold>false</isSold>
   </listing>
+  <listing>
+    <itemNumber>0001</itemNumber>
+    <category>seedlings</category>
+    <description/>
+    <price>0</price>
+    <isSold>false</isSold>
+  </listing>
 </listings>
