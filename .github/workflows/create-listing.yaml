@@ -47,12 +47,12 @@ jobs:
           description="${{ inputs.description }}"
           price="${{ inputs.price }}"
 
-          if [[ "$item_number" =~ [<>&"'\\] ]]; then
+          if [[ "$item_number" =~ [\<\>\&\"\'\\] ]]; then
             echo "Error: 'item_number' must not include special characters."
             exit 1
           fi
 
-          if [[ "$description" =~ [<>&"'\\] ]]; then
+          if [[ "$description" =~ [\<\>\&\"\'\\] ]]; then
             echo "Error: 'description' must not include special characters."
             exit 1
           fi
