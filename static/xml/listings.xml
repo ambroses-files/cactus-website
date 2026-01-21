@@ -63,4 +63,11 @@
     <price>0</price>
     <isSold>false</isSold>
   </listing>
+  <listing>
+    <itemNumber>0003 0004</itemNumber>
+    <category>clones</category>
+    <description>Description coming soon.</description>
+    <price>0.1</price>
+    <isSold>true</isSold>
+  </listing>
 </listings>
