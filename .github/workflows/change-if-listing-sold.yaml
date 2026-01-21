@@ -1,3 +1,4 @@
+name: change-if-listing-sold
 on: 
   workflow_dispatch:
     inputs:
