@@ -57,7 +57,7 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/ambrose-s/cactus-website.git
           git add static/xml/listings.xml
           if [[ $(git diff --cached --name-only) ]]; then
-            git commit -m "Remove listing: ${{ github.event.inputs.item_number }}"
+            git commit -m "Update sold value of listing: ${{ github.event.inputs.item_number }}"
             git push
           else
             echo "No changes to commit."
