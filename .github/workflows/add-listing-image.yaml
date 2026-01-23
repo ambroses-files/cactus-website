@@ -122,7 +122,7 @@ jobs:
           # append or replace images on listing
 
           # image small
-          if xmlstarlet sel -t -m "/listings/listing[itemNumber='$item_number']/imageSmall" -v "." listings.xml | grep -q .; then
+          if xmlstarlet sel -t -m "/listings/listing[itemNumber='$item_number']/imageSmall" -v "." $xml_path | grep -q .; then
             # element already exists, update it with new value
             if xmlstarlet ed -u "/listings/listing[itemNumber='$item_number']/imageSmall" -v "$image_small" $xml_path > $temp_path; then
                 mv $temp_path $xml_path
@@ -143,7 +143,7 @@ jobs:
           fi
 
           # image medium
-          if xmlstarlet sel -t -m "/listings/listing[itemNumber='$item_number']/imageMedium" -v "." listings.xml | grep -q .; then
+          if xmlstarlet sel -t -m "/listings/listing[itemNumber='$item_number']/imageMedium" -v "." $xml_path | grep -q .; then
             # element already exists, update it with new value
             if xmlstarlet ed -u "/listings/listing[itemNumber='$item_number']/imageMedium" -v "$image_medium" $xml_path > $temp_path; then
                 mv $temp_path $xml_path
@@ -164,7 +164,7 @@ jobs:
           fi
 
           # image big
-          if xmlstarlet sel -t -m "/listings/listing[itemNumber='$item_number']/imageBig" -v "." listings.xml | grep -q .; then
+          if xmlstarlet sel -t -m "/listings/listing[itemNumber='$item_number']/imageBig" -v "." $xml_path | grep -q .; then
             # element already exists, update it with new value
             if xmlstarlet ed -u "/listings/listing[itemNumber='$item_number']/imageBig" -v "$image_big" $xml_path > $temp_path; then
                 mv $temp_path $xml_path
