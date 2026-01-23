@@ -62,8 +62,5 @@
     <description/>
     <price>0</price>
     <isSold>true</isSold>
-    <imageSmall>static/images/small_0001.png</imageSmall>
-    <imageMedium>static/images/medium_0001.png</imageMedium>
-    <imageBig>static/images/big_0001.png</imageBig>
   </listing>
 </listings>
