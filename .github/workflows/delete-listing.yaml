@@ -85,7 +85,11 @@ jobs:
 
       - name: Commit changes
         run: |
-          git add static/images/* $xml_path
+          git add $xml_path
+          git add static/images/small_${{ inputs.item_number }}.png
+          git add static/images/medium_${{ inputs.item_number }}.png
+          git add static/images/big_${{ inputs.item_number }}.png
+          
           if [[ $(git diff --cached --name-only) ]]; then
             git commit -m "Remove listing: ${{ github.event.inputs.item_number }}"
             # Attempt to push changes
