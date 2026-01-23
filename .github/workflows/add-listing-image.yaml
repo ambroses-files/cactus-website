@@ -78,9 +78,6 @@ jobs:
             exit 1
           fi
 
-          echo "Debugging: checking static/image permissions"
-          ls -ld static/images
-
 
           if [ -z "$img_url" ]; then
             echo "Error: No image URL found in the issue body."
@@ -100,9 +97,6 @@ jobs:
             exit 1
           fi
 
-          echo "Debugging: Checking image file download"
-          ls -l static/images/small_$item_number.png
-
           cp "static/images/small_$item_number.png" "static/images/medium_$item_number.png"
           if [ ! -f "static/images/medium_$item_number.png" ]; then
             echo "Error: Failed to create medium image."
@@ -119,10 +113,6 @@ jobs:
           image_medium="static/images/medium_$item_number.png"
           image_big="static/images/big_$item_number.png"
 
-          echo "Debugging: Image paths: $image_small; $image_medium; $image_big"
-          echo "Debugging: listing images in static/images"
-          ls -lh static/images
-
           if ! mogrify -path "static/images" -resize 640x640 "$image_small"; then
             echo "Error: Failed to resize image to small size."
             exit 1
@@ -138,9 +128,6 @@ jobs:
             exit 1
           fi
 
-          echo "Debugging: Final images in static/images directory:"
-          ls -lh static/images
-
           # append or replace images on listing
 
           # image small
@@ -148,7 +135,7 @@ jobs:
             # element already exists, update it with new value
             if xmlstarlet ed -u "/listings/listing[itemNumber='$item_number']/imageSmall" -v "$image_small" $xml_path > $temp_path; then
                 mv $temp_path $xml_path
-                echo "Debugging: Updated imageSmall successfully"
+                echo "Updated imageSmall successfully"
             else
                 echo "Error updating the XML file."
                 exit 1
@@ -157,7 +144,7 @@ jobs:
             # element does not exist, insert new subnode
             if xmlstarlet ed -s "/listings/listing[itemNumber='$item_number']" -t elem -n "imageSmall" -v "$image_small" $xml_path > $temp_path; then
                 mv $temp_path $xml_path
-                echo "Debugging: Inserted imageSmall successfully"
+                echo "Inserted imageSmall successfully"
             else
                 echo "Error updating the XML file."
                 exit 1
@@ -169,7 +156,7 @@ jobs:
             # element already exists, update it with new value
             if xmlstarlet ed -u "/listings/listing[itemNumber='$item_number']/imageMedium" -v "$image_medium" $xml_path > $temp_path; then
                 mv $temp_path $xml_path
-                echo "Debugging: Updated imageMedium successfully"
+                echo "Updated imageMedium successfully"
             else
                 echo "Error updating the XML file."
                 exit 1
@@ -178,7 +165,7 @@ jobs:
             # element does not exist, insert new subnode
             if xmlstarlet ed -s "/listings/listing[itemNumber='$item_number']" -t elem -n "imageMedium" -v "$image_medium" $xml_path > $temp_path; then
                 mv $temp_path $xml_path
-                echo "Debugging: Inserted imageMedium successfully"
+                echo "Inserted imageMedium successfully"
             else
                 echo "Error updating the XML file."
                 exit 1
@@ -190,7 +177,7 @@ jobs:
             # element already exists, update it with new value
             if xmlstarlet ed -u "/listings/listing[itemNumber='$item_number']/imageBig" -v "$image_big" $xml_path > $temp_path; then
                 mv $temp_path $xml_path
-                echo "Debugging: Updated imageBig successfully"
+                echo "Updated imageBig successfully"
             else
                 echo "Error updating the XML file."
                 exit 1
@@ -199,7 +186,7 @@ jobs:
             # element does not exist, insert new subnode
             if xmlstarlet ed -s "/listings/listing[itemNumber='$item_number']" -t elem -n "imageBig" -v "$image_big" $xml_path > $temp_path; then
                 mv $temp_path $xml_path
-                echo "Debugging: Inserted imageBig successfully"
+                echo "Inserted imageBig successfully"
             else
                 echo "Error updating the XML file."
                 exit 1

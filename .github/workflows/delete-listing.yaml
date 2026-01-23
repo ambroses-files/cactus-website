@@ -68,6 +68,21 @@ jobs:
               exit 1
           fi
 
+          # delete associated listing images
+
+          for size in small medium big; do
+            image_path="static/images/${size}_$item_number.png"
+            if [ -e "$image_path" ]; then
+              if rm "$image_path"; then
+                echo "Removed $image_path successfully."
+              else
+                echo "Error: could not remove $image_path"
+              fi
+            else
+              echo "$image_path does not exist, skipping."
+            fi
+          done
+
       - name: Commit changes
         run: |
           git add $xml_path
