@@ -66,4 +66,11 @@
     <imageMedium>static/images/medium_0001.png</imageMedium>
     <imageBig>static/images/big_0001.png</imageBig>
   </listing>
+  <listing>
+    <itemNumber>0002</itemNumber>
+    <category>seedlings</category>
+    <description>Description coming soon.</description>
+    <price>0</price>
+    <isSold>false</isSold>
+  </listing>
 </listings>
