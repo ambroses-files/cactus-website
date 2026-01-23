@@ -201,10 +201,14 @@ jobs:
           git config --local user.name "GitHub Action"
           # Set the remote URL with the PAT for authentication
           git remote set-url origin https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/ambrose-s/cactus-website.git
-          git add $xml_path
+          git add static/images/* $xml_path
           if [[ $(git diff --cached --name-only) ]]; then
             git commit -m "Add image to listing: ${{ github.event.inputs.item_number }}"
-            git push
+            git push || {
+              echo "Push failed, trying to pull changes first"
+              git pull origin main
+              git push
+            }
           else
             echo "No changes to commit."
           fi
