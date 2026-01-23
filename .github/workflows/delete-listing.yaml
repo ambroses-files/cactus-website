@@ -67,11 +67,23 @@ jobs:
           git add static/xml/listings.xml
           if [[ $(git diff --cached --name-only) ]]; then
             git commit -m "Remove listing: ${{ github.event.inputs.item_number }}"
-            git push || {
+            # Attempt to push changes
+            if ! git push; then
               echo "Push failed, trying to pull changes first"
-              git pull origin main
-              git push
-            }
+              
+              # Configure pull strategy to merge
+              git config pull.rebase false
+              git pull origin main || {
+                echo "Failed to pull changes from remote."
+                exit 1
+              }
+              
+              # Try pushing again after pulling
+              if ! git push; then
+                echo "Push failed again after pulling changes."
+                exit 1
+              fi
+            fi
           else
             echo "No changes to commit."
           fi
