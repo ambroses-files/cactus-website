@@ -25,6 +25,13 @@ jobs:
 
           validate_input "$item_number" "item_number"
 
+      - name: Validate token
+        run: |
+          if [ -z "${{ secrets.ACCESS_TOKEN }}" ]; then
+              echo "Error: No GitHub access token provided."
+              exit 1
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v6
 
@@ -70,13 +77,13 @@ jobs:
 
           # create images to embed
 
-          if ! curl -o "static/images/small_$item_number.png" "$img_url"; then
+          if ! curl -L -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" "$img_url" -o "static/images/small_$item_number.png"; then
             echo "Error: Failed to download image from $img_url."
             exit 1
           fi
 
           # Check if the file was created
-          if [ ! -f "static/images/small_$item_number.png" ]; then
+          if [ ! -s "static/images/small_$item_number.png" ]; then
             echo "Error: Image file was not created."
             exit 1
           fi
@@ -97,7 +104,7 @@ jobs:
           image_medium="static/images/medium_$item_number.png"
           image_big="static/images/big_$item_number.png"
 
-          echo "Debugging: Image paths: $image_small; $image_medium; image_big"
+          echo "Debugging: Image paths: $image_small; $image_medium; $image_big"
 
           if ! mogrify -path "static/images" -resize 640x640 "$image_small"; then
             echo "Error: Failed to resize image to small size."
@@ -111,9 +118,6 @@ jobs:
             echo "Error: Failed to resize image to big size."
           fi
 
-          echo "Before updating XML, current content:"
-          cat $xml_path
-          # remove this after debugging ^
 
           # append or replace images on listing
 
