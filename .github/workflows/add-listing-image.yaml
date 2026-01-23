@@ -60,7 +60,9 @@ jobs:
           item_number="${{ github.event.issue.title }}"
           body='${{ github.event.issue.body }}'
           if [[ "$body" =~ src=\"([^\"]+)\" ]]; then
-            img_url="${BASH_REMATCH[1]}"
+              img_url="${BASH_REMATCH[1]}"
+          elif [[ "$body" =~ \[.*\]\((https?://[^\)]+) ]]; then
+              img_url="${BASH_REMATCH[1]}"
           else
             echo "Error: No image URL found in the issue body."
             echo "Debugging: ${BASH_REMATCH[1]}"
