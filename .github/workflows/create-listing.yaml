@@ -31,6 +31,9 @@ on:
           - 'true'
           - 'false'
         default: 'false'
+env:
+  xml_path: static/xml/listings.xml
+  temp_path: static/xml/temp.xml
 jobs:
   update_xml:
     runs-on: ubuntu-latest
@@ -89,17 +92,17 @@ jobs:
 
       - name: Update XML listing
         run: |
-          xmlstarlet ed -s "/listings" -t elem -n "listing" -v " " static/xml/listings.xml | \
+          xmlstarlet ed -s "/listings" -t elem -n "listing" -v " " $xml_path | \
           xmlstarlet ed -s "/listings/listing[last()]" -t elem -n "itemNumber" -v "${{ github.event.inputs.item_number }}" | \
           xmlstarlet ed -s "/listings/listing[last()]" -t elem -n "category" -v "${{ github.event.inputs.category }}" | \
           xmlstarlet ed -s "/listings/listing[last()]" -t elem -n "description" -v "${{ github.event.inputs.description }}" | \
           xmlstarlet ed -s "/listings/listing[last()]" -t elem -n "price" -v "${{ github.event.inputs.price }}" | \
-          xmlstarlet ed -s "/listings/listing[last()]" -t elem -n "isSold" -v "${{ github.event.inputs.is_sold }}" > static/xml/temp.xml
-          mv static/xml/temp.xml static/xml/listings.xml
+          xmlstarlet ed -s "/listings/listing[last()]" -t elem -n "isSold" -v "${{ github.event.inputs.is_sold }}" > $temp_path
+          mv $temp_path $xml_path
           
       - name: Commit changes
         run: |
-          git add static/xml/listings.xml
+          git add $xml_path
           if [[ $(git diff --cached --name-only) ]]; then
             git commit -m "Add new listing: ${{ github.event.inputs.item_number }}"
             # Attempt to push changes

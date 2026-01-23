@@ -10,6 +10,9 @@ on:
         options:
           - 'true'
           - 'false'
+env:
+  xml_path: static/xml/listings.xml
+  temp_path: static/xml/temp.xml
 jobs:
   update_xml:
     runs-on: ubuntu-latest
@@ -63,8 +66,8 @@ jobs:
           item_number="${{ inputs.item_number }}"
           is_sold="${{ inputs.is_sold }}"
 
-          if xmlstarlet ed -u "/listings/listing[itemNumber='$item_number']/isSold" -v $is_sold static/xml/listings.xml > static/xml/temp.xml; then
-              mv static/xml/temp.xml static/xml/listings.xml
+          if xmlstarlet ed -u "/listings/listing[itemNumber='$item_number']/isSold" -v $is_sold $xml_path > $temp_path; then
+              mv $temp_path $xml_path
           else
               echo "Error updating the XML file."
               exit 1
@@ -72,7 +75,7 @@ jobs:
 
       - name: Commit changes
         run: |
-          git add static/xml/listings.xml
+          git add $xml_path
           if [[ $(git diff --cached --name-only) ]]; then
             git commit -m "Update sold value of listing: ${{ github.event.inputs.item_number }}"
             # Attempt to push changes

@@ -6,6 +6,9 @@ on:
         required: true
         type: string
         description: item_number
+env:
+  xml_path: static/xml/listings.xml
+  temp_path: static/xml/temp.xml
 jobs:
   update_xml:
     runs-on: ubuntu-latest
@@ -58,8 +61,8 @@ jobs:
         run: |
           item_number="${{ inputs.item_number }}"
 
-          if xmlstarlet ed -d "/listings/listing[itemNumber='$item_number']" static/xml/listings.xml > static/xml/temp.xml; then
-              mv static/xml/temp.xml static/xml/listings.xml
+          if xmlstarlet ed -d "/listings/listing[itemNumber='$item_number']" $xml_path > $temp_path; then
+              mv $temp_path $xml_path
           else
               echo "Error updating the XML file."
               exit 1
@@ -67,7 +70,7 @@ jobs:
 
       - name: Commit changes
         run: |
-          git add static/xml/listings.xml
+          git add $xml_path
           if [[ $(git diff --cached --name-only) ]]; then
             git commit -m "Remove listing: ${{ github.event.inputs.item_number }}"
             # Attempt to push changes
