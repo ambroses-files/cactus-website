@@ -67,16 +67,6 @@
     <imageBig>static/images/big_0001.png</imageBig>
   </listing>
   <listing>
-    <itemNumber>0005</itemNumber>
-    <category>mutated</category>
-    <description>this was made on phone</description>
-    <price>8800000.0</price>
-    <isSold>true</isSold>
-    <imageSmall>static/images/small_0005.png</imageSmall>
-    <imageMedium>static/images/medium_0005.png</imageMedium>
-    <imageBig>static/images/big_0005.png</imageBig>
-  </listing>
-  <listing>
     <itemNumber>0006</itemNumber>
     <category>seedlings</category>
     <description>Description coming soon.</description>
