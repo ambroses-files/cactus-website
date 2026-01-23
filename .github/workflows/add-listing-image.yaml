@@ -68,8 +68,23 @@ jobs:
             exit 1
           fi
 
+          # Check if the file was created
+          if [ ! -f "static/images/small_$item_number.png" ]; then
+            echo "Error: Image file was not created."
+            exit 1
+          fi
+
           cp "static/images/small_$item_number.png" "static/images/medium_$item_number.png"
+          if [ ! -f "static/images/medium_$item_number.png" ]; then
+            echo "Error: Failed to create medium image."
+            exit 1
+          fi
+
           cp "static/images/small_$item_number.png" "static/images/big_$item_number.png"
+          if [ ! -f "static/images/big_$item_number.png" ]; then
+            echo "Error: Failed to create big image."
+            exit 1
+          fi
 
           image_small="static/images/small_$item_number.png"
           image_medium="static/images/medium_$item_number.png"
