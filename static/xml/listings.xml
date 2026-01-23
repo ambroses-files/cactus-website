@@ -62,5 +62,15 @@
     <description/>
     <price>0</price>
     <isSold>true</isSold>
+    <imageSmall>static/images/small_0001.png</imageSmall>
+    <imageMedium>static/images/medium_0001.png</imageMedium>
+    <imageBig>static/images/big_0001.png</imageBig>
+  </listing>
+  <listing>
+    <itemNumber>0005</itemNumber>
+    <category>mutated</category>
+    <description>this was made on phone</description>
+    <price>8800000.0</price>
+    <isSold>true</isSold>
   </listing>
 </listings>
